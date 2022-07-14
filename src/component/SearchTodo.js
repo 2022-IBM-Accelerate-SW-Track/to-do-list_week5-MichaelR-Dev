@@ -17,7 +17,23 @@ class SearchTodo extends Component {
   
 
   handleSubmit = (e) => {
-    //Begin Here
+    e.preventDefault();  
+    // HTTP Client to send a GET request
+    Axios({
+    method: "GET",
+    url: "http://localhost:8080/get/searchitem",
+    headers: {
+        "Content-Type": "application/json" 
+    },
+    params: {
+        taskname: this.state.content
+    }
+    }).then(res => {
+    this.setState({
+        tmpdata: JSON.stringify(res.data),
+        });
+
+    });
     
   };
   
@@ -35,6 +51,7 @@ class SearchTodo extends Component {
           <Button
             id="search-item-button"
             name='submit'
+            type="submit"
             style={{ marginLeft: "10px",marginTop:10 }}
             onClick={this.handleSubmit}
             variant="contained"
